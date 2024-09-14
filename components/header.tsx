@@ -35,7 +35,7 @@ export function Header() {
     </ul>
 
     <div className="ms-auto">
-     <UserIcon />
+     <UserIcon className="size-5" />
     </div>
    </div>
   </motion.header>

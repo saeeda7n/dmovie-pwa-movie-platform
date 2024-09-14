@@ -7,7 +7,7 @@ import { getTrending } from "@/server/actions/movieDB";
 
 export async function Carousel() {
  const trending = await getTrending("day");
- const items = trending.results.filter((item) => item.title);
+ const items = trending.results;
 
  return (
   <CarouselContext items={items}>

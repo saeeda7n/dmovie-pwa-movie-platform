@@ -4,11 +4,27 @@ import Image from "next/image";
 import { PlayIcon } from "lucide-react";
 import Link from "next/link";
 
-export function CarouselCard({
- item: { backdrop_path, poster_path, title, id, overview, release_date },
-}: {
- item: Movie;
-}) {
+export function CarouselCard({ item }: { item: Movie | TvShow }) {
+ const { id, overview, backdrop_path, poster_path } = item;
+ const Title = () =>
+  item.media_type === "tv" ? (
+   <>
+    <Link href={`/tv/${id}/${item.name.toSlug()}`}>{item.name}</Link>
+    <span className="ms-1 text-3xl font-light text-zinc-500 xl:text-5xl">
+     ({new Date(item.first_air_date).getFullYear()})
+    </span>
+   </>
+  ) : (
+   <>
+    <Link href={`/movie/${id}/${item.title.toSlug()}`}>{item.title}</Link>
+    <span className="ms-1 text-3xl font-light text-zinc-500 xl:text-5xl">
+     ({new Date(item.release_date).getFullYear()})
+    </span>
+   </>
+  );
+
+ const alt = item.media_type === "tv" ? item.name : item.title;
+
  return (
   <React.Fragment>
    <CarouselBackground
@@ -22,7 +38,7 @@ export function CarouselCard({
        width={440}
        height={680}
        src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER}${poster_path}`}
-       alt={title}
+       alt={alt}
        className="h-full w-full rounded-lg bg-zinc-800 object-cover object-center"
       />
       <button className="absolute flex size-20 items-center justify-center rounded-[45%] bg-gray-50/70 text-gray-950 opacity-0 backdrop-blur transition duration-300 group-hover:opacity-100">
@@ -32,12 +48,7 @@ export function CarouselCard({
 
      <div className="flex flex-col gap-5 py-5">
       <h2 className="line-clamp-3 font-schibsted-grotesk-font text-5xl font-bold xl:text-6xl">
-       <Link href={`/movie/${id}/${title.toLowerCase().replaceAll(" ", "-")}`}>
-        {title}
-       </Link>
-       <span className="ms-1 text-3xl font-light text-zinc-500 xl:text-5xl">
-        ({new Date(release_date).getFullYear()})
-       </span>
+       <Title />
       </h2>
       <p className="line-clamp-5 max-w-5xl text-sm text-gray-100/50 xl:text-base">
        {overview}

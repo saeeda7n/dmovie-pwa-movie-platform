@@ -1,38 +1,38 @@
 import React from "react";
-import { VideoSectionClient } from "@/components/videoSection/videoSectionClient";
 import { Clapperboard } from "lucide-react";
 
-type VideoSectionProps = {
- query: () => Promise<PaginatedResult<Movie>>;
+type VideoSectionProps<T> = {
+ query: () => Promise<PaginatedResult<T>>;
  title: string;
  desc?: string;
+ children: (item: T[]) => React.ReactNode;
+ icon?: React.ReactNode;
 };
 
-export const VideoSection = async ({
+export async function SlidingSection<T>({
  query,
  desc,
  title,
-}: VideoSectionProps) => {
+ children,
+ icon,
+}: VideoSectionProps<T>) {
  const { results } = await query();
+
  return (
-  <div className="container flex gap-5">
-   <div className="w-full">
-    <div className="flex items-center gap-3">
-     <Clapperboard className="size-10 shrink-0" />
-     <div>
-      <h2 className="text-lg font-bold">{title}</h2>
-      {desc && <p className="text-sm font-medium text-zinc-500">{desc}</p>}
-     </div>
-    </div>
-    <div className="mt-5 w-full">
-     <VideoSectionClient list={results} />
+  <div className="w-full">
+   <div className="flex items-center gap-3">
+    {icon || <Clapperboard className="size-10 shrink-0" />}
+    <div>
+     <h2 className="text-lg font-bold">{title}</h2>
+     {desc && <p className="text-sm font-medium text-zinc-500">{desc}</p>}
     </div>
    </div>
+   <div className="mt-5 w-full">{children(results)}</div>
   </div>
  );
-};
+}
 
-export function LoadingState() {
+export function SliderLoader() {
  return (
   <div className="container flex gap-5">
    <div className="w-full">

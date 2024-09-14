@@ -35,12 +35,11 @@ export const getThisWeekTrending = cache(async () => {
  return response.data;
 });
 export const getTrending = cache(async (time: "day" | "week") => {
- const response = await movieDbClient.get<PaginatedResult<Movie>>(
-  `trending/all/${time}`,
-  {
-   params: { language: "en-US" },
-  },
- );
+ const response = await movieDbClient.get<
+  PaginatedResult<Movie & WithMediaType & WithName>
+ >(`trending/all/${time}`, {
+  params: { language: "en-US" },
+ });
 
  return response.data;
 });
@@ -67,3 +66,13 @@ export const getMovie = cache(
   return response.data;
  },
 );
+export const getTvShowsAiringToday = cache(async () => {
+ const response = await movieDbClient.get<PaginatedResult<TvShow>>(
+  `tv/airing_today`,
+  {
+   params: { language: "en-US" },
+  },
+ );
+
+ return response.data;
+});

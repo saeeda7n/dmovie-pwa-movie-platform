@@ -5,28 +5,51 @@ declare type PaginatedResult<T> = {
  total_results: number;
 };
 
-declare type Movie = {
- adult: boolean;
+type Entity = {
  backdrop_path: string;
- genre_ids: number[];
  id: number;
- original_language: string;
- original_title: string;
  overview: string;
- popularity: number;
  poster_path: string;
- release_date: string;
- title: string;
- video: boolean;
+ media_type: MediaType;
+ adult: boolean;
+ original_language: string;
+ genre_ids: Array<number>;
+ popularity: number;
  vote_average: number;
  vote_count: number;
+};
+
+declare type Movie = Entity & {
+ original_title: string;
+ release_date: string;
+ title: string;
+ media_type: "movie";
+};
+
+type TvShow = Entity & {
+ name: string;
+ original_name: string;
+ media_type: "tv";
+ adult: boolean;
+ first_air_date: string;
+ origin_country: Array<string>;
+};
+
+type MediaType = "tv" | "movie";
+
+type Genre = {
+ id: number;
+ name: string;
+};
+
+type WithName = {
+ name: string;
 };
 
 type WithGenre = {
  genres: Array<Genre>;
 };
 
-type Genre = {
- id: number;
- name: string;
+type WithMediaType = {
+ media_type: MediaType;
 };

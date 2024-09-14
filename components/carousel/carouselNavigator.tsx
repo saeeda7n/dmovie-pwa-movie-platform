@@ -7,7 +7,7 @@ import { useCarousel } from "@/components/carousel/carouselContext";
 export function CarouselNavigator() {
  const { total, setActive, active } = useCarousel();
  const { scrollY } = useScroll();
- const opacity = useTransform(scrollY, [100, 300], [1, 0]);
+ const opacity = useTransform(scrollY, [500, 600], [1, 0]);
  return (
   <motion.div
    style={{ opacity }}

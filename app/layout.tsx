@@ -6,6 +6,7 @@ import Lenis from "@/app/lenis";
 import { PropsWithChildren } from "react";
 import { ClientProviders } from "@/app/queryClient";
 import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 
 const schibstedGrotesk = Schibsted_Grotesk({
  subsets: ["latin"],
@@ -23,6 +24,7 @@ export const metadata: Metadata = {
 };
 
 type RootLayoutProps = Readonly<PropsWithChildren>;
+
 export default function RootLayout({ children }: RootLayoutProps) {
  return (
   <html lang="en">
@@ -30,12 +32,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
     className={cn(
      schibstedGrotesk.variable,
      lexend.variable,
-     "overflow-x-hidden font-lexend",
+     "overflow-x-hidden font-lexend selection:bg-gray-50 selection:text-gray-900",
     )}
    >
     <ClientProviders>
      <Header />
      <Lenis>{children}</Lenis>
+     <Footer />
     </ClientProviders>
    </body>
   </html>
