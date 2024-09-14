@@ -2,17 +2,18 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { PlayIcon } from "lucide-react";
+import DbImage from "@/components/DbImage";
 
 const TvShowCard = ({ show }: { show: TvShow }) => {
  return (
   <div className="group relative flex shrink-0 select-none flex-col items-center justify-center gap-2">
    <div className="relative flex items-center justify-center">
-    <Image
+    <DbImage
      draggable="false"
      alt={show.name}
      width={460}
      height={680}
-     src={`https://image.tmdb.org/t/p/original/${show.poster_path}`}
+     src={`${show.poster_path}`}
      className="aspect-[9/13] !w-56 rounded-lg bg-zinc-900 object-cover object-center"
     />
     <Link

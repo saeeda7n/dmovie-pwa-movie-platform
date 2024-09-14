@@ -20,7 +20,7 @@ export async function SlidingSection<T>({
 
  return (
   <div className="w-full">
-   <div className="flex items-center gap-3">
+   <div className="relative flex items-center gap-3">
     {icon || <Clapperboard className="size-10 shrink-0" />}
     <div>
      <h2 className="text-lg font-bold">{title}</h2>

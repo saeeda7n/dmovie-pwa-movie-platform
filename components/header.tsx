@@ -6,7 +6,7 @@ import {
  useScroll,
  useTransform,
 } from "framer-motion";
-import { UserIcon } from "lucide-react";
+import { SearchIcon, UserIcon } from "lucide-react";
 
 export function Header() {
  const target = useRef<HTMLHeadElement | null>(null);
@@ -34,8 +34,13 @@ export function Header() {
      <li>TV Shows</li>
     </ul>
 
-    <div className="ms-auto">
-     <UserIcon className="size-5" />
+    <div className="ms-auto flex items-center gap-3">
+     <button>
+      <SearchIcon className="size-5" />
+     </button>
+     <button>
+      <UserIcon className="size-5" />
+     </button>
     </div>
    </div>
   </motion.header>

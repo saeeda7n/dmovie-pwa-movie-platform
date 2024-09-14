@@ -1,8 +1,8 @@
 import React from "react";
 import { CarouselBackground } from "@/components/carousel/carouselBackground";
-import Image from "next/image";
 import { PlayIcon } from "lucide-react";
 import Link from "next/link";
+import DbImage from "@/components/DbImage";
 
 export function CarouselCard({ item }: { item: Movie | TvShow }) {
  const { id, overview, backdrop_path, poster_path } = item;
@@ -27,17 +27,15 @@ export function CarouselCard({ item }: { item: Movie | TvShow }) {
 
  return (
   <React.Fragment>
-   <CarouselBackground
-    background={`${process.env.NEXT_PUBLIC_IMAGE_SERVER}${backdrop_path}`}
-   />
+   <CarouselBackground background={`${backdrop_path}`} />
    <div className="absolute inset-0 flex bg-gradient-to-b from-black/20 via-black/70 to-black pb-16">
     <div className="container z-10 flex items-end gap-5">
      <div className="group relative flex aspect-[9/13] w-80 shrink-0 select-none items-center justify-center xl:w-96">
-      <Image
+      <DbImage
        draggable="false"
        width={440}
        height={680}
-       src={`${process.env.NEXT_PUBLIC_IMAGE_SERVER}${poster_path}`}
+       src={`${poster_path}`}
        alt={alt}
        className="h-full w-full rounded-lg bg-zinc-800 object-cover object-center"
       />

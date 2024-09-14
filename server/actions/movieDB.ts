@@ -55,17 +55,35 @@ export const getRecentMovies = cache(async () => {
 });
 
 export const getMovie = cache(
- async (
+ async <T>(
   id: string | number,
-  appends: Array<"videos" | "images" | "recommendations" | "similar">,
+  appends: Array<
+   "videos" | "images" | "recommendations" | "similar" | "credits" | "keywords"
+  >,
  ) => {
-  const response = await movieDbClient.get<Movie & WithGenre>(`movie/${id}`, {
+  const response = await movieDbClient.get<MovieDetail & T>(`movie/${id}`, {
    params: { language: "en-US", append_to_response: appends?.join(",") },
   });
 
   return response.data;
  },
 );
+
+export const getTvShow = cache(
+ async (
+  id: string | number,
+  appends: Array<
+   "videos" | "images" | "recommendations" | "similar" | "credits"
+  >,
+ ) => {
+  const response = await movieDbClient.get<TvShow & WithGenre>(`tv/${id}`, {
+   params: { language: "en-US", append_to_response: appends?.join(",") },
+  });
+
+  return response.data;
+ },
+);
+
 export const getTvShowsAiringToday = cache(async () => {
  const response = await movieDbClient.get<PaginatedResult<TvShow>>(
   `tv/airing_today`,

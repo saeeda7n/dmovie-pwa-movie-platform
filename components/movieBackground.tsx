@@ -18,7 +18,7 @@ export function MovieBackground({
     ...style,
     backgroundImage: `url("${images[imageIndex || 0]}")`,
    }}
-   className={cn("absolute inset-0 opacity-5", className)}
+   className={cn("absolute inset-0 opacity-10", className)}
    {...props}
   />
  );
