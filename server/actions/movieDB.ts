@@ -94,3 +94,25 @@ export const getTvShowsAiringToday = cache(async () => {
 
  return response.data;
 });
+
+export const getMovieRecommendations = cache(async (id: number) => {
+ const response = await movieDbClient.get<PaginatedResult<Movie>>(
+  `movie/${id}/recommendations`,
+  {
+   params: { language: "en-US" },
+  },
+ );
+
+ return response.data;
+});
+
+export const getMovieSimilar = cache(async (id: number) => {
+ const response = await movieDbClient.get<PaginatedResult<Movie>>(
+  `movie/${id}/similar`,
+  {
+   params: { language: "en-US" },
+  },
+ );
+
+ return response.data;
+});

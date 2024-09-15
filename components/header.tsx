@@ -34,7 +34,7 @@ export function Header() {
      <li>TV Shows</li>
     </ul>
 
-    <div className="ms-auto flex items-center gap-3">
+    <div className="ms-auto flex items-center gap-5">
      <button>
       <SearchIcon className="size-5" />
      </button>

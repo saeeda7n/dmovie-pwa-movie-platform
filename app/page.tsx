@@ -11,6 +11,7 @@ import { SliderLoader, SlidingSection } from "@/components/slidingSection";
 import { SliderClient } from "@/components/slidingSection/sliderClient";
 import { TvIcon } from "lucide-react";
 import { MovieBackground } from "@/components/movieBackground";
+import ContentWrapper from "@/components/contentWrapper";
 
 export const revalidate = 10800;
 
@@ -18,7 +19,7 @@ export default async function Home() {
  return (
   <main className="min-h-screen overflow-x-hidden">
    <Carousel />
-   <div className="min-h-screen space-y-12 overflow-x-hidden py-16">
+   <ContentWrapper>
     <section>
      <div className="container flex gap-5">
       <Suspense fallback={<SliderLoader />}>
@@ -93,7 +94,7 @@ export default async function Home() {
       </Suspense>
      </div>
     </section>
-   </div>
+   </ContentWrapper>
   </main>
  );
 }

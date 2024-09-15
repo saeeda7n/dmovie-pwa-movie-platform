@@ -1,18 +1,28 @@
-import React, { PropsWithChildren } from "react";
-import { getMovie } from "@/server/actions/movieDB";
+import React, { Suspense } from "react";
+import {
+ getMovie,
+ getMovieRecommendations,
+ getMovieSimilar,
+} from "@/server/actions/movieDB";
 import { CarouselBackground } from "@/components/carousel/carouselBackground";
 import DbImage from "@/components/DbImage";
-import AClient from "@/app/movie/[...movie]/aClient";
 import Link from "next/link";
+import { DotIcon } from "lucide-react";
+import { formatDuration, intervalToDuration } from "date-fns";
+import { CastSlider } from "@/components/castSlider";
+import ContentWrapper from "@/components/contentWrapper";
+import { SliderLoader, SlidingSection } from "@/components/slidingSection";
+import { SliderClient } from "@/components/slidingSection/sliderClient";
 
 function Genre({ genres }: { genres: Genre[] }) {
  return (
   <div className="">
-   <ul className="flex gap-1 text-xs font-medium">
-    {genres.map((genre) => (
-     <Chip tag="li" key={genre.id}>
-      <a href="#">{genre.name}</a>
-     </Chip>
+   <ul className="flex">
+    {genres.map((genre, index, array) => (
+     <li>
+      {index > 0 && index < array.length && `, `}
+      <Link href="#">{genre.name}</Link>
+     </li>
     ))}
    </ul>
   </div>
@@ -26,6 +36,7 @@ const SingleMoviePage = async ({
 }) => {
  const [id] = movie;
  const {
+  runtime,
   poster_path,
   backdrop_path,
   genres,
@@ -35,7 +46,7 @@ const SingleMoviePage = async ({
   keywords,
   credits,
   tagline,
-  ...rest
+  ...props
  } = await getMovie<WithGenre & WithKeywords & WithCredits>(id, [
   "similar",
   "recommendations",
@@ -46,25 +57,24 @@ const SingleMoviePage = async ({
 
  const markedCrew = credits.crew
   .filter((value) =>
-   ["Screenplay", "Director", "Novel", "Writer"].includes(value.job),
+   [
+    "Screenplay",
+    "Director",
+    "Novel",
+    "Writer",
+    "Characters",
+    "Story",
+   ].includes(value.job),
   )
   .sort((a, b) => (a.job > b.job ? 1 : -1));
 
+ const duration = intervalToDuration(
+  { start: 0, end: runtime * 1000 * 60 },
+  {},
+ );
+ const formatted = formatDuration(duration, { format: ["hours", "minutes"] });
  return (
   <div>
-   <AClient
-    t={{
-     poster_path,
-     backdrop_path,
-     genres,
-     title,
-     overview,
-     release_date,
-     keywords,
-     credits,
-     ...rest,
-    }}
-   />
    <div className="relative min-h-[calc(max(100vh,48rem))] overflow-hidden bg-zinc-950">
     <div className="absolute inset-0 overflow-hidden">
      <CarouselBackground background={`${backdrop_path}`} />
@@ -80,13 +90,19 @@ const SingleMoviePage = async ({
        />
 
        <div className="flex flex-col gap-5 py-5">
+        <p className="-mb-5 text-xs font-medium text-gray-400">{tagline}</p>
+
         <h2 className="line-clamp-3 font-schibsted-grotesk-font text-5xl font-bold xl:text-6xl">
          {title}
-         <span className="ms-1 text-3xl font-light text-zinc-500 xl:text-5xl">
-          ({new Date(release_date).getFullYear()})
-         </span>
         </h2>
-        <p className="-mt-4 text-xs font-medium text-gray-400">{tagline}</p>
+
+        <div className="flex flex-wrap items-center">
+         <span>{release_date}</span>
+         <DotIcon />
+         <Genre genres={genres} />
+         <DotIcon />
+         <span>{formatted}</span>
+        </div>
         <p className="line-clamp-5 max-w-5xl text-sm text-gray-100/50 xl:text-base">
          {overview}
         </p>
@@ -103,28 +119,49 @@ const SingleMoviePage = async ({
           </div>
          ))}
         </div>
-
-        <Genre genres={genres} />
        </div>
       </div>
      </div>
     </div>
    </div>
 
-   <div className="min-h-screen">
-    <div className="container">Hello World</div>
-   </div>
+   <ContentWrapper>
+    <section>
+     <div className={"container flex gap-5"}>
+      <CastSlider casts={credits.cast} />
+     </div>
+    </section>
+
+    <section>
+     <div className="container flex gap-5">
+      <Suspense fallback={<SliderLoader />}>
+       <SlidingSection<Movie>
+        title="Recommendations"
+        desc="A list of recommendations movies."
+        query={() => getMovieRecommendations(+id)}
+       >
+        {(items) => <SliderClient items={items} type="movie" />}
+       </SlidingSection>
+      </Suspense>
+     </div>
+    </section>
+
+    <section>
+     <div className="container flex gap-5">
+      <Suspense fallback={<SliderLoader />}>
+       <SlidingSection<Movie>
+        title="Similar"
+        desc="A list of similar movies."
+        query={() => getMovieSimilar(+id)}
+       >
+        {(items) => <SliderClient items={items} type="movie" />}
+       </SlidingSection>
+      </Suspense>
+     </div>
+    </section>
+   </ContentWrapper>
   </div>
  );
 };
 
 export default SingleMoviePage;
-
-function Chip({ tag, children }: { tag: string } & PropsWithChildren) {
- const As = tag as keyof JSX.IntrinsicElements;
- return (
-  <As className="rounded-md bg-gray-50 px-2 py-0.5 text-gray-900 transition duration-300 hover:opacity-50">
-   {children}
-  </As>
- );
-}

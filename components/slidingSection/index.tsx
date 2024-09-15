@@ -1,5 +1,6 @@
 import React from "react";
-import { Clapperboard } from "lucide-react";
+import { ArrowRight, ChevronRight, Clapperboard } from "lucide-react";
+import Link from "next/link";
 
 type VideoSectionProps<T> = {
  query: () => Promise<PaginatedResult<T>>;
@@ -25,6 +26,12 @@ export async function SlidingSection<T>({
     <div>
      <h2 className="text-lg font-bold">{title}</h2>
      {desc && <p className="text-sm font-medium text-zinc-500">{desc}</p>}
+    </div>
+    <div className="ms-auto">
+     <Link href="/" className="group flex items-center justify-center gap-2">
+      More
+      <ArrowRight className="size-5 -translate-x-2 opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
+     </Link>
     </div>
    </div>
    <div className="mt-5 w-full">{children(results)}</div>
