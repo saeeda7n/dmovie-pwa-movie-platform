@@ -3,6 +3,7 @@ import { CarouselBackground } from "@/components/carousel/carouselBackground";
 import { PlayIcon } from "lucide-react";
 import Link from "next/link";
 import DbImage from "@/components/DbImage";
+import { PlayTrailerButton } from "@/components/trailerDialog";
 
 export function CarouselCard({ item }: { item: Movie | TvShow }) {
  const { id, overview, backdrop_path, poster_path } = item;
@@ -39,9 +40,13 @@ export function CarouselCard({ item }: { item: Movie | TvShow }) {
        alt={alt}
        className="h-full w-full rounded-lg bg-zinc-800 object-cover object-center"
       />
-      <button className="absolute flex size-20 items-center justify-center rounded-[45%] bg-gray-50/70 text-gray-950 opacity-0 backdrop-blur transition duration-300 group-hover:opacity-100">
+      <PlayTrailerButton
+       mediaId={id}
+       mediaType={item.media_type}
+       className="absolute flex size-20 items-center justify-center rounded-[45%] bg-gray-50/70 text-gray-950 opacity-0 backdrop-blur transition duration-300 group-hover:opacity-100"
+      >
        <PlayIcon className="size-8 fill-gray-950" />
-      </button>
+      </PlayTrailerButton>
      </div>
 
      <div className="flex flex-col gap-5 py-5">

@@ -7,6 +7,7 @@ import { PropsWithChildren } from "react";
 import { ClientProviders } from "@/app/queryClient";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import TrailerDialog from "@/components/trailerDialog";
 
 const schibstedGrotesk = Schibsted_Grotesk({
  subsets: ["latin"],
@@ -37,7 +38,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
    >
     <ClientProviders>
      <Header />
-     <Lenis>{children}</Lenis>
+     {children}
      <Footer />
     </ClientProviders>
    </body>

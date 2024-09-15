@@ -116,3 +116,18 @@ export const getMovieSimilar = cache(async (id: number) => {
 
  return response.data;
 });
+
+export const getMovieVideos = cache(async (id: number) => {
+ const response = await movieDbClient.get<MovieVideos>(`movie/${id}/videos`, {
+  params: { language: "en-US" },
+ });
+
+ return response.data;
+});
+export const getTvShowVideos = cache(async (id: number) => {
+ const response = await movieDbClient.get<MovieVideos>(`tv/${id}/videos`, {
+  params: { language: "en-US" },
+ });
+
+ return response.data;
+});

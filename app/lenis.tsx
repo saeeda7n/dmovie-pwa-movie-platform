@@ -8,13 +8,3 @@ export default function Lenis({ children }: React.PropsWithChildren) {
   </ReactLenis>
  );
 }
-
-declare global {
- interface String {
-  toSlug(): string;
- }
-}
-
-String.prototype.toSlug = function (this: string) {
- return this.toLowerCase().replaceAll(" ", "-");
-};

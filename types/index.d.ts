@@ -166,3 +166,17 @@ declare interface Keyword {
  id: number;
  name: string;
 }
+
+declare type MovieVideos = {
+ id: number;
+ results: Array<{
+  name: string;
+  key: string;
+  site: "YouTube";
+  size: number;
+  type: string;
+  official: boolean;
+  published_at: string;
+  id: string;
+ }>;
+};

@@ -7,6 +7,7 @@ import {
  useTransform,
 } from "framer-motion";
 import { SearchIcon, UserIcon } from "lucide-react";
+import Link from "next/link";
 
 export function Header() {
  const target = useRef<HTMLHeadElement | null>(null);
@@ -26,7 +27,9 @@ export function Header() {
    className="fixed inset-x-0 top-0 z-50 flex h-16 items-center selection:bg-gray-50 selection:text-gray-800"
   >
    <div className="container flex items-center gap-10">
-    <h1 className="text-lg font-bold">DMovie</h1>
+    <h1 className="text-lg font-bold">
+     <Link href="/">DMovie</Link>
+    </h1>
 
     <ul className="contents text-xs font-medium">
      <li>Home</li>
