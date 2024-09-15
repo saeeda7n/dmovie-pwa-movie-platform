@@ -26,7 +26,7 @@ export function SliderClient({
    className="!overflow-visible"
   >
    {items.map((value) => (
-    <SwiperSlide key={value.id} className="ms-5 !w-56 first:ms-0">
+    <SwiperSlide key={value.id} className="ms-5 !w-48 first:ms-0 xl:!w-56">
      {(value.media_type = type) === "movie" ? (
       <MovieCard movie={value} />
      ) : (

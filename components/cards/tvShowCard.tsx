@@ -14,7 +14,7 @@ const TvShowCard = ({ show }: { show: TvShow }) => {
      width={460}
      height={680}
      src={`${show.poster_path}`}
-     className="aspect-[9/13] !w-56 rounded-lg bg-zinc-900 object-cover object-center"
+     className="aspect-[9/13] w-full rounded-lg bg-zinc-900 object-cover object-center"
     />
     <PlayTrailerButton
      mediaId={show.id}

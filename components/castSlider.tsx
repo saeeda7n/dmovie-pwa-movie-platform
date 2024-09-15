@@ -28,7 +28,10 @@ export function CastSlider({ casts }: { casts: Cast[] }) {
      className="!overflow-visible"
     >
      {casts.map((value) => (
-      <SwiperSlide key={value.id} className="ms-5 !w-44 first:ms-0">
+      <SwiperSlide
+       key={value.id}
+       className="ms-3 !w-32 first:ms-0 xl:ms-5 xl:!w-44"
+      >
        <PersonCard cast={value} />
       </SwiperSlide>
      ))}
@@ -40,8 +43,8 @@ export function CastSlider({ casts }: { casts: Cast[] }) {
 
 function PersonCard({ cast }: { cast: Cast }) {
  return (
-  <div className="w-44 select-none rounded-lg bg-zinc-950">
-   <div className="flex aspect-[9/12] w-44 items-center justify-center overflow-hidden rounded-lg bg-zinc-900">
+  <div className="w-full select-none rounded-lg bg-zinc-950">
+   <div className="flex aspect-[9/12] w-full items-center justify-center overflow-hidden rounded-lg bg-zinc-900">
     {cast.profile_path ? (
      <DbImage
       className="object-cover object-center"
@@ -54,9 +57,9 @@ function PersonCard({ cast }: { cast: Cast }) {
      <UserRoundIcon className="size-40" />
     )}
    </div>
-   <div className="flex-col overflow-hidden px-2 py-2">
+   <div className="flex flex-col overflow-hidden px-2 py-2 xl:gap-1">
     <h4 className="truncate text-sm font-semibold">{cast.name}</h4>
-    <span className="truncate text-xs font-medium">{cast.character}</span>
+    <p className="truncate text-xs font-medium">{cast.character}</p>
    </div>
   </div>
  );
