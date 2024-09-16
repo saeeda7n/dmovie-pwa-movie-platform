@@ -9,9 +9,10 @@ import {
 } from "framer-motion";
 import { SearchIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
-import { getGenres } from "@/server/actions/movieDB";
+import { useClientContext } from "@/components/clientContext";
 
-function Menu({ genres }: { genres: Awaited<ReturnType<typeof getGenres>> }) {
+function Menu() {
+ const { genres } = useClientContext();
  const [selected, setSelected] = useState<null | {
   name: string;
   genres: Genre[] | null;
@@ -62,7 +63,7 @@ function Menu({ genres }: { genres: Awaited<ReturnType<typeof getGenres>> }) {
         {selected.genres?.map((genre) => (
          <li key={genre.id} className="group flex items-center gap-2">
           <span className="size-1 bg-emerald-500 transition duration-300 group-hover:scale-150" />
-          <Link href="">{genre.name}</Link>
+          <Link href={`/${genre.id}`}>{genre.name}</Link>
          </li>
         ))}
        </motion.ul>
@@ -74,11 +75,7 @@ function Menu({ genres }: { genres: Awaited<ReturnType<typeof getGenres>> }) {
  );
 }
 
-export function Header({
- genres,
-}: {
- genres: Awaited<ReturnType<typeof getGenres>>;
-}) {
+export function Header() {
  const target = useRef<HTMLHeadElement | null>(null);
  const { scrollY } = useScroll();
  const height = useTransform(scrollY, [0, 200], ["4.5rem", "3rem"]);
@@ -100,7 +97,7 @@ export function Header({
      <Link href="/">DMovie</Link>
     </h1>
 
-    <Menu genres={genres} />
+    <Menu />
 
     <div className="ms-auto flex items-center gap-5">
      <button>

@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PropsWithChildren } from "react";
 import TrailerDialog from "@/components/trailerDialog";
 import Lenis from "@/app/lenis";
+import ClientContext from "@/components/clientContext";
 
 const queryClient = new QueryClient({
  defaultOptions: {

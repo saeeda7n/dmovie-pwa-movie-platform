@@ -7,6 +7,7 @@ import { ClientProviders } from "@/app/queryClient";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { getGenres } from "@/server/actions/movieDB";
+import ClientContext from "@/components/clientContext";
 
 const schibstedGrotesk = Schibsted_Grotesk({
  subsets: ["latin"],
@@ -36,11 +37,13 @@ export default async function RootLayout({ children }: RootLayoutProps) {
      "overflow-x-hidden font-lexend selection:bg-gray-50 selection:text-gray-900",
     )}
    >
-    <ClientProviders>
-     <Header genres={genres} />
-     {children}
-     <Footer />
-    </ClientProviders>
+    <ClientContext genres={genres}>
+     <ClientProviders>
+      <Header />
+      {children}
+      <Footer />
+     </ClientProviders>
+    </ClientContext>
    </body>
   </html>
  );
