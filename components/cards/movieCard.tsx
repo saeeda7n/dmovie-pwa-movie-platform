@@ -6,8 +6,8 @@ import { PlayTrailerButton } from "@/components/trailerDialog";
 
 const MovieCard = ({ movie }: { movie: Movie }) => {
  return (
-  <div className="group relative flex shrink-0 select-none flex-col items-center justify-center gap-2">
-   <div className="relative flex items-center justify-center">
+  <div className="group relative flex w-full shrink-0 select-none flex-col items-center justify-center gap-2">
+   <div className="relative flex w-full items-center justify-center">
     <DbImage
      draggable="false"
      alt={movie.title}

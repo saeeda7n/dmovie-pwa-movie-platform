@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import { Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import Lenis from "@/app/lenis";
-import { PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
 import { ClientProviders } from "@/app/queryClient";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import TrailerDialog from "@/components/trailerDialog";
+import { getGenres } from "@/server/actions/movieDB";
 
 const schibstedGrotesk = Schibsted_Grotesk({
  subsets: ["latin"],
@@ -26,7 +25,8 @@ export const metadata: Metadata = {
 
 type RootLayoutProps = Readonly<PropsWithChildren>;
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+ const genres = await getGenres();
  return (
   <html lang="en">
    <body
@@ -37,7 +37,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     )}
    >
     <ClientProviders>
-     <Header />
+     <Header genres={genres} />
      {children}
      <Footer />
     </ClientProviders>

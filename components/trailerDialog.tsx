@@ -81,9 +81,9 @@ const TrailerDialog = ({ children }: PropsWithChildren) => {
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
        <DialogPanel
         as={motion.div}
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: -50, scale: 0.8 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 100, scale: 0.8 }}
         className="w-full max-w-5xl space-y-4 rounded-lg border border-zinc-950 bg-black p-5 lg:p-12"
        >
         <DialogTitle className="flex items-center text-lg font-bold">

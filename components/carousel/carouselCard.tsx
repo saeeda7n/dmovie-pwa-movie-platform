@@ -33,12 +33,11 @@ export function CarouselCard({ item }: { item: Movie | TvShow }) {
     <div className="container z-10 flex items-end gap-5">
      <div className="group relative flex aspect-[9/13] w-80 shrink-0 select-none items-center justify-center xl:w-96">
       <DbImage
-       draggable="false"
        width={440}
        height={680}
-       src={`${poster_path}`}
+       src={poster_path}
        alt={alt}
-       className="h-full w-full rounded-lg bg-zinc-800 object-cover object-center"
+       className="h-full w-full rounded-lg bg-zinc-800"
       />
       <PlayTrailerButton
        mediaId={id}
@@ -53,9 +52,10 @@ export function CarouselCard({ item }: { item: Movie | TvShow }) {
       <h2 className="line-clamp-3 font-schibsted-grotesk-font text-5xl font-bold xl:text-6xl">
        <Title />
       </h2>
-      <p className="line-clamp-5 max-w-5xl text-sm text-gray-100/50 xl:text-base">
-       {overview}
-      </p>
+      <p
+       className="line-clamp-5 max-w-5xl text-sm text-gray-100/50 xl:text-base"
+       children={overview}
+      />
      </div>
     </div>
    </div>

@@ -18,7 +18,7 @@ export async function SlidingSection<T>({
  icon,
 }: VideoSectionProps<T>) {
  const { results } = await query();
-
+ if (results.length <= 0) return null;
  return (
   <div className="w-full">
    <div className="relative flex items-center gap-3">

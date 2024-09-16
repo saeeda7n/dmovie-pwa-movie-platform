@@ -131,3 +131,36 @@ export const getTvShowVideos = cache(async (id: number) => {
 
  return response.data;
 });
+
+export const getTvShowGenres = cache(async () => {
+ const response = await movieDbClient.get<WithGenre>(`genre/tv/list`, {
+  params: { language: "en-US" },
+ });
+
+ return response.data;
+});
+export const getMovieGenres = cache(async () => {
+ const response = await movieDbClient.get<WithGenre>(`genre/movie/list`, {
+  params: { language: "en-US" },
+ });
+
+ return response.data;
+});
+export const getGenres = cache(async () => {
+ const [movieGenres, tvShowGenres] = await Promise.all([
+  getMovieGenres(),
+  getTvShowGenres(),
+ ]);
+ return { movieGenres, tvShowGenres };
+});
+
+export const discoverMovies = cache(async ({ page }: { page: number }) => {
+ const response = await movieDbClient.get<PaginatedResult<Movie>>(
+  `discover/movie`,
+  {
+   params: { language: "en-US", page },
+  },
+ );
+
+ return response.data;
+});
