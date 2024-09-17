@@ -6,7 +6,8 @@ export function useCreateURL(key: string): (value: any) => string {
  const params = new URLSearchParams(searchParams);
 
  return (value: any) => {
-  params.set(key, String(value));
+  if (value) params.set(key, String(value));
+  else params.delete(key);
   return `${pathname}?${params.toString()}` as string;
  };
 }

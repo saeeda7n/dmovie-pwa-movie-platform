@@ -12,11 +12,13 @@ export async function Carousel() {
  return (
   <CarouselContext items={items}>
    <div className="relative flex min-h-[max(100vh,48rem)] flex-col overflow-hidden">
-    {items.map((value, index) => (
-     <CarouselItem key={value.id} index={index}>
-      <CarouselCard item={value} />
-     </CarouselItem>
-    ))}
+    {items
+     .filter(({ media_type }) => ["tv", "movie"].includes(media_type))
+     .map((value, index) => (
+      <CarouselItem key={value.id} index={index}>
+       <CarouselCard item={value} />
+      </CarouselItem>
+     ))}
     <CarouselNavigator />
    </div>
   </CarouselContext>
