@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import { useClientContext } from "@/components/clientContext";
 import {
  Combobox,
@@ -10,22 +10,38 @@ import {
 } from "@headlessui/react";
 import { cn } from "@/lib/utils";
 import { CheckIcon, ChevronDownIcon } from "lucide-react";
+import { useCreateURL } from "@/hooks/useCreateURL";
+import { useRouter } from "next/navigation";
 
 export function Filters() {
  return (
-  <div className="container mt-16 rounded-lg bg-zinc-900 py-5">
-   <div className="w-96">
+  <div className="container mt-16 grid grid-cols-12 rounded-lg bg-zinc-900 py-5">
+   <InputWrapper name="Genre">
     <SelectGenres />
-   </div>
+   </InputWrapper>
   </div>
  );
 }
+
+function InputWrapper({
+ children,
+ name,
+}: PropsWithChildren & { name: string }) {
+ return (
+  <div className="col-span-3 flex flex-col gap-1">
+   <span className="text-xs font-medium">{name}</span>
+   {children}
+  </div>
+ );
+}
+
 function SelectGenres() {
+ const router = useRouter();
+ const createURL = useCreateURL("with_genres");
  const { genres } = useClientContext();
  const [query, setQuery] = useState("");
- const [selected, setSelected] = useState(genres.movieGenres.genres[0]);
-
- const filteredGenres =
+ const [selected, setSelected] = useState<Genre>(genres.movieGenres.genres[0]);
+ const filteredItems =
   query === ""
    ? genres.movieGenres.genres
    : genres.movieGenres.genres.filter((genre) => {
@@ -35,7 +51,10 @@ function SelectGenres() {
  return (
   <Combobox
    value={selected}
-   onChange={(value) => setSelected(value)}
+   onChange={(value) => {
+    setSelected(value);
+    router.replace(createURL(value.id));
+   }}
    onClose={() => setQuery("")}
   >
    <div className="relative">
@@ -60,7 +79,7 @@ function SelectGenres() {
      "transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0",
     )}
    >
-    {filteredGenres.map((genre) => (
+    {filteredItems.map((genre) => (
      <ComboboxOption
       key={genre.id}
       value={genre}

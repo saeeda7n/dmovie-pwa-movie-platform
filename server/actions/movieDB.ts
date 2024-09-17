@@ -1,6 +1,11 @@
 "use server";
 import { cache } from "react";
 import { movieDbClient } from "@/lib/movieDbClient";
+import { z } from "zod";
+import {
+ DiscoverMoviesQueryProps,
+ discoverMoviesQuerySchema,
+} from "@/schemas/discoverMoviesQuerySchema";
 
 export const getPopular = cache(async () => {
  const response = await movieDbClient.get<PaginatedResult<Movie>>(
@@ -154,11 +159,34 @@ export const getGenres = cache(async () => {
  return { movieGenres, tvShowGenres };
 });
 
-export const discoverMovies = cache(async ({ page }: { page: number }) => {
- const response = await movieDbClient.get<PaginatedResult<Movie>>(
-  `discover/movie`,
+export const discoverMovies = cache(
+ async ({ page, with_genres }: DiscoverMoviesQueryProps) => {
+  const response = await movieDbClient.get<PaginatedResult<Movie>>(
+   `discover/movie`,
+   {
+    params: { language: "en-US", page, with_genres },
+   },
+  );
+
+  return response.data;
+ },
+);
+
+export const getLanguages = cache(async () => {
+ const response = await movieDbClient.get<SpokenLanguage[]>(
+  `configuration/languages`,
   {
-   params: { language: "en-US", page },
+   params: { language: "en-US" },
+  },
+ );
+
+ return response.data;
+});
+export const getCountries = cache(async () => {
+ const response = await movieDbClient.get<Country[]>(
+  `configuration/countries`,
+  {
+   params: { language: "en-US" },
   },
  );
 

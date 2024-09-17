@@ -6,7 +6,11 @@ import React, { PropsWithChildren } from "react";
 import { ClientProviders } from "@/app/queryClient";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { getGenres } from "@/server/actions/movieDB";
+import {
+ getCountries,
+ getGenres,
+ getLanguages,
+} from "@/server/actions/movieDB";
 import ClientContext from "@/components/clientContext";
 
 const schibstedGrotesk = Schibsted_Grotesk({
@@ -27,7 +31,11 @@ export const metadata: Metadata = {
 type RootLayoutProps = Readonly<PropsWithChildren>;
 
 export default async function RootLayout({ children }: RootLayoutProps) {
- const genres = await getGenres();
+ const [genres, languages, countries] = await Promise.all([
+  getGenres(),
+  getLanguages(),
+  getCountries(),
+ ]);
  return (
   <html lang="en">
    <body
@@ -37,7 +45,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
      "overflow-x-hidden font-lexend selection:bg-gray-50 selection:text-gray-900",
     )}
    >
-    <ClientContext genres={genres}>
+    <ClientContext genres={genres} languages={languages} countries={countries}>
      <ClientProviders>
       <Header />
       {children}

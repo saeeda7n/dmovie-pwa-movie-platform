@@ -9,6 +9,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useCreateURL } from "@/hooks/useCreateURL";
 
 type Props = {
  totalPages: number;
@@ -25,15 +26,8 @@ export function Pagination({
  currentPage,
  last,
 }: Props) {
- const searchParams = useSearchParams();
- const pathname = usePathname();
  last = last > 500 ? 500 : last;
-
- function createURL(page: number): URL {
-  const params = new URLSearchParams(searchParams);
-  params.set("page", String(page));
-  return `${pathname}?${params.toString()}` as any;
- }
+ const createUrl = useCreateURL("page");
 
  return (
   <div className="mt-12 flex items-center justify-center">
@@ -43,7 +37,7 @@ export function Pagination({
    >
     <Link
      prefetch={false}
-     href={createURL(1)}
+     href={createUrl(1)}
      className={cn(
       "relative inline-flex items-center rounded-md rounded-r-md px-2 py-2 text-gray-50 hover:bg-gray-50 hover:text-gray-900 focus:z-20 focus:outline-offset-0",
       { "pointer-events-none opacity-50": !hasPrev },
@@ -54,7 +48,7 @@ export function Pagination({
     </Link>
     <Link
      prefetch={false}
-     href={createURL(currentPage - 1)}
+     href={createUrl(currentPage - 1)}
      className={cn(
       "relative inline-flex items-center rounded-md rounded-r-md px-2 py-2 text-gray-50 hover:bg-gray-50 hover:text-gray-900 focus:z-20 focus:outline-offset-0",
       { "pointer-events-none opacity-50": !hasPrev },
@@ -66,7 +60,7 @@ export function Pagination({
     {[...new Array(totalPages > 10 ? 10 : totalPages)].map((_, index) => (
      <Link
       key={index}
-      href={createURL(index + 1)}
+      href={createUrl(index + 1)}
       prefetch={false}
       aria-current="page"
       className={cn(
@@ -83,7 +77,7 @@ export function Pagination({
 
     <Link
      prefetch={false}
-     href={createURL(currentPage + 1)}
+     href={createUrl(currentPage + 1)}
      className={cn(
       "relative inline-flex items-center rounded-md rounded-r-md px-2 py-2 text-gray-50 hover:bg-gray-50 hover:text-gray-900 focus:z-20 focus:outline-offset-0",
       { "pointer-events-none opacity-50": !hasNext },
@@ -95,7 +89,7 @@ export function Pagination({
 
     <Link
      prefetch={false}
-     href={createURL(last)}
+     href={createUrl(last)}
      className={cn(
       "relative inline-flex items-center rounded-md rounded-r-md px-2 py-2 text-gray-50 hover:bg-gray-50 hover:text-gray-900 focus:z-20 focus:outline-offset-0",
       { "pointer-events-none opacity-50": !hasNext },
