@@ -4,20 +4,21 @@ import { PlayIcon } from "lucide-react";
 import Link from "next/link";
 import DbImage from "@/components/DbImage";
 import { PlayTrailerButton } from "@/components/trailerDialog";
+import { toSlug } from "@/lib/utils";
 
 export function CarouselCard({ item }: { item: Movie | TvShow }) {
  const { id, overview, backdrop_path, poster_path } = item;
  const Title = () =>
   item.media_type === "tv" ? (
    <>
-    <Link href={`/tv/${id}/${item.name.toSlug()}`}>{item.name}</Link>
+    <Link href={`/tv/${id}/${toSlug(item.name)}`}>{item.name}</Link>
     <span className="ms-1 text-3xl font-light text-zinc-500 xl:text-5xl">
      ({new Date(item.first_air_date).getFullYear()})
     </span>
    </>
   ) : (
    <>
-    <Link href={`/movie/${id}/${item.title.toSlug()}`}>{item.title}</Link>
+    <Link href={`/movie/${id}/${toSlug(item.title)}`}>{item.title}</Link>
     <span className="ms-1 text-3xl font-light text-zinc-500 xl:text-5xl">
      ({new Date(item.release_date).getFullYear()})
     </span>

@@ -9,6 +9,8 @@ import {
 } from "@/schemas/discoverMoviesQuerySchema";
 import { ClientPagination } from "@/app/movie/(root)/clientPagination";
 
+export const dynamic = "force-dynamic";
+
 const MoviesPage = async ({
  searchParams,
 }: {

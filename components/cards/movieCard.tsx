@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PlayIcon } from "lucide-react";
 import DbImage from "@/components/DbImage";
 import { PlayTrailerButton } from "@/components/trailerDialog";
+import { toSlug } from "@/lib/utils";
 
 const MovieCard = ({ movie }: { movie: Movie }) => {
  return (
@@ -26,7 +27,7 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
    </div>
    <div className="flex w-full flex-col">
     <Link
-     href={`/movie/${movie.id}/${movie.title.toSlug()}`}
+     href={`/movie/${movie.id}/${toSlug(movie.title)}`}
      className="font-semibold"
     >
      {movie.title}

@@ -23,13 +23,3 @@ export function ClientProviders({ children }: PropsWithChildren) {
   </QueryClientProvider>
  );
 }
-
-declare global {
- interface String {
-  toSlug(): string;
- }
-}
-
-String.prototype.toSlug = function (this: string) {
- return this.toLowerCase().replaceAll(" ", "-");
-};

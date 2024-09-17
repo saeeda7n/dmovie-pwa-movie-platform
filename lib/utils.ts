@@ -8,3 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function Sleep(duration: number = 1000) {
  return new Promise((resolve) => setTimeout(resolve, duration));
 }
+
+export function toSlug(plainText: string) {
+ return plainText?.toLowerCase()?.replaceAll(" ", "-");
+}
