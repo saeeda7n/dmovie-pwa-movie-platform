@@ -2,12 +2,12 @@ import React from "react";
 import ContentWrapper from "@/components/contentWrapper";
 import { discoverMovies } from "@/server/actions/movieDB";
 import MoviesClientPage from "@/app/movie/(root)/moviesClientPage";
-import { Pagination } from "@/app/movie/(root)/pagination";
 import { Filters } from "@/app/movie/(root)/filters";
 import {
  DiscoverMoviesQueryProps,
  discoverMoviesQuerySchema,
 } from "@/schemas/discoverMoviesQuerySchema";
+import { ClientPagination } from "@/app/movie/(root)/clientPagination";
 
 const MoviesPage = async ({
  searchParams,
@@ -21,13 +21,7 @@ const MoviesPage = async ({
   <ContentWrapper>
    <Filters />
    <MoviesClientPage movies={result} />
-   <Pagination
-    currentPage={query.page}
-    totalPages={result.total_pages}
-    hasNext={result.total_pages > result.page}
-    hasPrev={result.page > 1}
-    last={result.total_pages}
-   />
+   <ClientPagination total={result.total_pages} current={result.page} />
   </ContentWrapper>
  );
 };

@@ -12,6 +12,7 @@ import {
  getLanguages,
 } from "@/server/actions/movieDB";
 import ClientContext from "@/components/clientContext";
+import { NextUIProvider } from "@nextui-org/react";
 
 const schibstedGrotesk = Schibsted_Grotesk({
  subsets: ["latin"],
@@ -42,16 +43,18 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     className={cn(
      schibstedGrotesk.variable,
      lexend.variable,
-     "overflow-x-hidden font-lexend selection:bg-gray-50 selection:text-gray-900",
+     "dark overflow-x-hidden font-lexend selection:bg-gray-50 selection:text-gray-900",
     )}
    >
-    <ClientContext genres={genres} languages={languages} countries={countries}>
-     <ClientProviders>
-      <Header />
-      {children}
-      <Footer />
-     </ClientProviders>
-    </ClientContext>
+    <NextUIProvider>
+     <ClientContext genres={genres} languages={languages} countries={countries}>
+      <ClientProviders>
+       <Header />
+       {children}
+       <Footer />
+      </ClientProviders>
+     </ClientContext>
+    </NextUIProvider>
    </body>
   </html>
  );

@@ -159,18 +159,16 @@ export const getGenres = cache(async () => {
  return { movieGenres, tvShowGenres };
 });
 
-export const discoverMovies = cache(
- async ({ page, with_genres }: DiscoverMoviesQueryProps) => {
-  const response = await movieDbClient.get<PaginatedResult<Movie>>(
-   `discover/movie`,
-   {
-    params: { language: "en-US", page, with_genres },
-   },
-  );
+export const discoverMovies = cache(async (query: DiscoverMoviesQueryProps) => {
+ const response = await movieDbClient.get<PaginatedResult<Movie>>(
+  `discover/movie`,
+  {
+   params: { language: "en-US", ...query },
+  },
+ );
 
-  return response.data;
- },
-);
+ return response.data;
+});
 
 export const getLanguages = cache(async () => {
  const response = await movieDbClient.get<SpokenLanguage[]>(
